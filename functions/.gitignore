@@ -1,0 +1,12 @@
+## Compiled JavaScript files
+**/*.js
+**/*.js.map
+
+# Typescript v1 declaration files
+typings/
+
+node_modules/
+
+sample_files
+lib
+illust-hub-firebase-adminsdk-wdb1x-8052c10a9e.json
