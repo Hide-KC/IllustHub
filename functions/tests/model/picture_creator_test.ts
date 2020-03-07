@@ -1,25 +1,27 @@
 import {describe, it} from "mocha"
 import * as fs from "fs"
 import * as sqlite3 from "sqlite3"
+import * as path from "path"
 
 describe("Preview Test", () => {
   it(".clipのテーブル確認", () => {
-    const path = "C:\\Users\\hide1\\FirebaseProjects\\IllustHub\\functions\\sample_asset\\illust3"
-    const clipPath = path + ".clip"
+    const baseName = path.join(path.resolve('sample_files'), 'illust1')
+    console.log("baseName : " + baseName + "\n")
+    const clipPath = baseName + ".clip"
     const clipBuffer = fs.readFileSync(clipPath)
     console.log("clipBuffer : " + clipBuffer + "\n")
 
     const searchText: string = "SQLite format 3"
-    const uint8Array = new Uint8Array(Buffer.from(searchText))
-    console.log("SQLite format 3 as : " + uint8Array.join('') + "\n")
+    const buffer = Buffer.from(searchText)
+    console.log("SQLite format 3 as : " + buffer.join('') + "\n")
 
-    const findIndex = clipBuffer.indexOf(uint8Array)
+    const findIndex = clipBuffer.indexOf(buffer)
     console.log("findIndex : " + findIndex + "\n")
 
     const resultBuf = clipBuffer.slice(findIndex, clipBuffer.length)
     console.log("resultBuf : " + resultBuf + "\n")
 
-    const dbPath = path + ".sqlite"
+    const dbPath = baseName + ".sqlite"
     // いったんsqliteファイルに書き出し
     fs.writeFileSync(dbPath, resultBuf)
 
@@ -36,7 +38,7 @@ describe("Preview Test", () => {
         })
 
         if (row.length > 0) {
-          const binaryPath = path + ".png"
+          const binaryPath = baseName + ".png"
           fs.writeFileSync(binaryPath, row[0].ImageData)
         }
       })
